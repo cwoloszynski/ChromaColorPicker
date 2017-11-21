@@ -1,11 +1,10 @@
 # ChromaColorPicker :art:
-![Supported Version](https://img.shields.io/badge/Swift-3-yellow.svg)
+![Supported Version](https://img.shields.io/badge/Swift-4-yellow.svg)
 ![Platform](https://img.shields.io/badge/platform-iOS-lightgray.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Carthage](https://img.shields.io/badge/Carthage-✔-green.svg)
-![CocoaPods](https://img.shields.io/badge/CocoaPods-1.5.1-green.svg)
+![CocoaPods](https://img.shields.io/badge/CocoaPods-1.6.0-green.svg)
 
-*An intuitive iOS color picker built in Swift.*
+*An intuitive iOS color picker built in Swift. (Swift 4 support added by @Laptopmini)*
 
 Supports hue and grayscale modes to make choosing the right color easy and fun!
 
@@ -15,15 +14,11 @@ Supports hue and grayscale modes to make choosing the right color easy and fun!
 </div>
 
 ## Installation
-### Carthage
-```
-github "joncardasis/ChromaColorPicker"
-```
-
 ### Cocoapods
 ```
-pod 'ChromaColorPicker'
+pod 'ChromaColorPicker', :git => 'https://github.com/Laptopmini/ChromaColorPicker.git'
 ```
+
 ### Manually
 Add all files from the ChromaColorPicker folder to your project.
 
