@@ -321,6 +321,9 @@ open class ChromaColorPicker: UIControl {
         context?.restoreGState()
     }
     
+    open override func layoutSubviews() {
+        self.layout()
+    }
     
     //MARK: - Layout Updates
     /* Re-layout view and all its subview and drawings */
