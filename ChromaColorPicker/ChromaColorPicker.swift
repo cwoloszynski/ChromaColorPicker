@@ -65,6 +65,18 @@ open class ChromaColorPicker: UIControl {
         get{ return CGSize(width: self.bounds.width * 0.1, height: self.bounds.height * 0.1) }
     }
     
+    open var enableImmediateColorUpdate: Bool {
+        get {
+            return self.immediateColorUpdate
+        }
+        set {
+            addButton.isHidden = newValue
+            self.immediateColorUpdate = newValue
+        }
+    }
+    
+    private var immediateColorUpdate: Bool = false
+    
     //MARK: - Initialization
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -394,19 +406,29 @@ open class ChromaColorPicker: UIControl {
     Pre: dependant on radius
     */
     func layoutShadeSlider(){
-        /* Calculate proper length for slider */
-        let centerPoint = CGPoint(x: bounds.midX, y: bounds.midY)
-        let insideRadius = radius - padding
         
-        let pointLeft = CGPoint(x: centerPoint.x + insideRadius*CGFloat(cos(7*Double.pi/6)), y: centerPoint.y - insideRadius*CGFloat(sin(7*Double.pi/6)))
-        let pointRight = CGPoint(x: centerPoint.x + insideRadius*CGFloat(cos(11*Double.pi/6)), y: centerPoint.y - insideRadius*CGFloat(sin(11*Double.pi/6)))
-        let deltaX = pointRight.x - pointLeft.x //distance on circle between points at 7pi/6 and 11pi/6
-        
+        if immediateColorUpdate {
+            let width = 0.75*(radius*2 - padding*2)
+            let height = 0.12 * (bounds.height - padding*2)
+            shadeSlider.frame = CGRect(x: self.bounds.midX - width/2, y: self.bounds.midY - height/2, width: width, height: height)
+            shadeSlider.handleCenterX = shadeSlider.bounds.width/2 //set handle starting position
+            shadeSlider.layoutLayerFrames() 
 
-        let sliderSize = CGSize(width: deltaX * 0.75, height: 0.08 * (bounds.height - padding*2))//bounds.height
-        shadeSlider.frame = CGRect(x: bounds.midX - sliderSize.width/2, y: pointLeft.y - sliderSize.height/2, width: sliderSize.width, height: sliderSize.height)
-        shadeSlider.handleCenterX = shadeSlider.bounds.width/2 //set handle starting position
-        shadeSlider.layoutLayerFrames() //call sliders' layout function
+        } else {
+            /* Calculate proper length for slider */
+            let centerPoint = CGPoint(x: bounds.midX, y: bounds.midY)
+            let insideRadius = radius - padding
+            
+            let pointLeft = CGPoint(x: centerPoint.x + insideRadius*CGFloat(cos(7*Double.pi/6)), y: centerPoint.y - insideRadius*CGFloat(sin(7*Double.pi/6)))
+            let pointRight = CGPoint(x: centerPoint.x + insideRadius*CGFloat(cos(11*Double.pi/6)), y: centerPoint.y - insideRadius*CGFloat(sin(11*Double.pi/6)))
+            let deltaX = pointRight.x - pointLeft.x //distance on circle between points at 7pi/6 and 11pi/6
+            
+
+            let sliderSize = CGSize(width: deltaX * 0.75, height: 0.08 * (bounds.height - padding*2))//bounds.height
+            shadeSlider.frame = CGRect(x: bounds.midX - sliderSize.width/2, y: pointLeft.y - sliderSize.height/2, width: sliderSize.width, height: sliderSize.height)
+            shadeSlider.handleCenterX = shadeSlider.bounds.width/2 //set handle starting position
+            shadeSlider.layoutLayerFrames() //call sliders' layout function
+        }
     }
     
     /*
@@ -426,6 +448,10 @@ open class ChromaColorPicker: UIControl {
         currentColor = color
         addButton.color = color
         self.sendActions(for: .valueChanged)
+        
+        if (immediateColorUpdate) {
+            delegate?.colorPickerDidChooseColor(self, color: currentColor)
+        }
     }
     
     @objc open func togglePickerColorMode() {
