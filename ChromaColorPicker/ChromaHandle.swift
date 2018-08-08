@@ -62,10 +62,16 @@ open class ChromaHandle: UIView {
         self.layer.addSublayer(circleLayer)
     }
     
+    open override func layoutSubviews() {
+        layoutCircleLayer()
+    }
+    
     open func layoutCircleLayer(){
-        circleLayer.path = UIBezierPath(ovalIn: self.bounds).cgPath
+        let lineWidth = frame.width/8.75 //4
+        let insetBounds = self.bounds.insetBy(dx: lineWidth, dy: lineWidth)
+        circleLayer.path = UIBezierPath(ovalIn: insetBounds).cgPath
         circleLayer.strokeColor = UIColor.white.cgColor
-        circleLayer.lineWidth = frame.width/8.75 //4
+        circleLayer.lineWidth = lineWidth
     }
     
     required public init(coder aDecoder: NSCoder) {
