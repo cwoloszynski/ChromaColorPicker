@@ -62,7 +62,7 @@ open class ChromaColorPicker: UIControl {
     open var stroke: CGFloat = 1
     open var padding: CGFloat = 15
     open var handleSize: CGSize{
-        get{ return CGSize(width: self.bounds.width * 0.1, height: self.bounds.height * 0.1) }
+        get{ return CGSize(width: self.bounds.width * 0.12, height: self.bounds.height * 0.12) }
     }
     
     open var enableImmediateColorUpdate: Bool {

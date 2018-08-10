@@ -109,7 +109,7 @@ open class ChromaShadeSlider: UIControl {
     }
     
     open func layoutLayerFrames(){
-        trackLayer.frame = self.bounds.insetBy(dx: handleWidth/2, dy: self.bounds.height/4) //Make half the height of the bounds
+        trackLayer.frame = self.bounds.insetBy(dx: handleWidth/2, dy: self.bounds.height/3) //Make half the height of the bounds
         trackLayer.cornerRadius = trackLayer.bounds.height/2
         
         self.updateGradientTrack(for: primaryColor)
